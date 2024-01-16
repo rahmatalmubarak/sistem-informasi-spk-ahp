@@ -1,4 +1,4 @@
-<footer class="text-center">&copy; 2016 | Sistem Pendukung Keputusan Penerimaan Karyawan Baru di CV.PUTRA MANDIRI</footer>
+<footer class="text-center">&copy; 2016 | Penerimaan beasiswa PPA UIN</footer>
 	</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

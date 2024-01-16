@@ -47,7 +47,7 @@ if($_POST){
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 		
-		  <a class="navbar-brand" href="">Sistem Pendukung Keputusan Penerimaan Karyawan Baru di CV.PUTRA MANDIRI</a>
+		  <a class="navbar-brand" href="">Penerimaan beasiswa PPA UIN</a>
 		</div>
 
 		

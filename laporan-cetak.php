@@ -8,7 +8,7 @@ class PDF extends FPDF{
 	}
 	
 	function Header(){
-	    $this->SetFont('Times','B',14);
+	    $this->SetFont('Arial','B',14);
 	    $this->Cell(80);
 	    $this->Cell(30,10,'LAPORAN SISTEM PENDUKUNG KEPUTUSAN',0,0,'C');
 	    $this->Ln(20);
@@ -16,7 +16,7 @@ class PDF extends FPDF{
 	
 	function Footer(){
 	    $this->SetY(-15);
-	    $this->SetFont('Times','',8);
+	    $this->SetFont('Arial','',8);
 	    $this->Cell(0,10,$this->PageNo(),0,0,'R');
 	}
 	
@@ -50,54 +50,70 @@ $stmtx2y = $pro->readBob();
 
 $pdf = new PDF();
 $pdf->AddPage();
-$pdf->SetFont('Times','B',14);
+$pdf->SetFont('Arial','B',9);
 $pdf->Cell(40,10,'Skor Dan Bobot Alternatif Kriteria',0,0,'L');
 $pdf->ln();
-$pdf->SetFont('Times','B',12);
-$pdf->Cell(40,7,'Kriteria/Alternatif',1,0,'L');
+$pdf->SetFont('Arial','B',9);
+$pdf->Cell(30,7,'Kriteria/Alternatif',1,0,'L');
 
 while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-	$pdf->Cell(30,7,$row2['nama_kriteria'],1,0,'L');
+	if (strlen($row2['nama_kriteria']) >= 21) {
+		$pdf->Cell(42, 7, $row2['nama_kriteria'], 1, 0, 'L');
+	} else if (strlen($row2['nama_kriteria']) < 23) {
+		$pdf->Cell(35, 7, $row2['nama_kriteria'], 1, 0, 'L');
+	}
 }
 
 $pdf->ln();
-$pdf->SetFont('Times','',12);
+$pdf->SetFont('Arial','',9);
 
 while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)){
-	$pdf->Cell(40,7,$row1['nama_alternatif'],1,0,'L');
+	$pdf->Cell(30,7,$row1['nama_alternatif'],1,0,'L');
 	$aj= $row1['id_alternatif'];
 	$stmt21 = $pro2->readAll();
 	while ($row21 = $stmt21->fetch(PDO::FETCH_ASSOC)){
 		$bj= $row21['id_kriteria'];
 		$stmtr = $pro->readR($aj,$bj);
 		while ($rowr = $stmtr->fetch(PDO::FETCH_ASSOC)){
-			$pdf->Cell(30,7,number_format($rowr['skor_alt_kri'], 11, '.', ','),1,0,'L');
+			if (strlen($row21['nama_kriteria']) >= 21) {
+				$pdf->Cell(42,7,number_format($rowr['skor_alt_kri'], 11, '.', ','),1,0,'L');
+			} else if (strlen($row21['nama_kriteria']) < 23) {
+				$pdf->Cell(35,7,number_format($rowr['skor_alt_kri'], 11, '.', ','),1,0,'L');
+			}
 		}
 	}
 	$pdf->ln();
 }
-$pdf->Cell(40,7,'Bobot',1,0,'L');
+$pdf->Cell(30,7,'Bobot',1,0,'L');
 while ($rowx1 = $stmtx1->fetch(PDO::FETCH_ASSOC)){
-	$pdf->Cell(30,7,number_format($rowx1['bobot_kriteria'], 11, '.', ','),1,0,'L');
+	if (strlen($rowx1['nama_kriteria']) >= 21) {
+		$pdf->Cell(42,7,number_format($rowx1['bobot_kriteria'], 11, '.', ','),1,0,'L');
+	} else if (strlen($rowx1['nama_kriteria']) < 23) {
+		$pdf->Cell(35,7,number_format($rowx1['bobot_kriteria'], 11, '.', ','),1,0,'L');
+	}
 }
 $pdf->ln();
 
-$pdf->SetFont('Times','B',14);
+$pdf->SetFont('Arial','B',9);
 $pdf->Cell(40,10,'Hasil Perangkingan',0,0,'L');
 $pdf->ln();
 
-$pdf->SetFont('Times','B',12);
-$pdf->Cell(40,7,'Kriteria/Alternatif',1,0,'L');
+$pdf->SetFont('Arial','B',9);
+$pdf->Cell(30,7,'Kriteria/Alternatif',1,0,'L');
 while ($row2y = $stmt2y->fetch(PDO::FETCH_ASSOC)){
-	$pdf->Cell(25,7,$row2y['nama_kriteria'],1,0,'L');
+	if(strlen($row2y['nama_kriteria']) >= 21){
+		$pdf->Cell(42,7,$row2y['nama_kriteria'],1,0,'L');
+	} else if (strlen($row2y['nama_kriteria']) < 23) {
+		$pdf->Cell(30,7,$row2y['nama_kriteria'],1,0,'L');
+	}
 }
-$pdf->Cell(25,7,'Hasil',1,0,'L');
+$pdf->Cell(15,7,'Hasil',1,0,'L');
 
 $pdf->ln();
-$pdf->SetFont('Times','',12);
+$pdf->SetFont('Arial','',9);
 
 while ($row1 = $stmt1y->fetch(PDO::FETCH_ASSOC)){
-	$pdf->Cell(40,7,$row1['nama_alternatif'],1,0,'L');
+	$pdf->Cell(30,7,$row1['nama_alternatif'],1,0,'L');
 	$a1= $row1['id_alternatif'];
 	$stmt21 = $pro2->readAll();
 	while ($row21 = $stmt21->fetch(PDO::FETCH_ASSOC)){
@@ -105,12 +121,16 @@ while ($row1 = $stmt1y->fetch(PDO::FETCH_ASSOC)){
 		$stmtr = $pro->readR($a1,$b2);
 		while ($rowr = $stmtr->fetch(PDO::FETCH_ASSOC)){
 			$xab = $rowr['skor_alt_kri']*$row21['bobot_kriteria'];
-			$pdf->Cell(25,7,number_format($xab, 5, '.', ','),1,0,'L');
+			if (strlen($row21['nama_kriteria']) >= 21) {
+				$pdf->Cell(42,7,number_format($xab, 5, '.', ','),1,0,'L');
+			}else if(strlen($row21['nama_kriteria']) < 23){
+				$pdf->Cell(30,7,number_format($xab, 5, '.', ','),1,0,'L');
+			}
 		}
 	}
 	$stmthasil = $pro->readHasil2($a1);
 	$hasil = $stmthasil->fetch(PDO::FETCH_ASSOC);
-	$pdf->Cell(25,7,number_format($hasil['hasil_akhir'], 5, '.', ','),1,0,'L');
+	$pdf->Cell(15,7,number_format($hasil['hasil_akhir'], 5, '.', ','),1,0,'L');
 	$pdf->ln();
 }
 $pdf->ln();

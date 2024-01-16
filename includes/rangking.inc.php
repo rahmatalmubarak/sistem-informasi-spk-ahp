@@ -64,7 +64,7 @@ class Rangking{
 	
 	function readKhusus(){
 
-		$query = "SELECT * FROM ahp_data_alternatif a, ahp_data_kriteria b, ahp_rangking c where a.id_alternatif=c.id_alternatif and b.id_kriteria=c.id_kriteria order by a.id_alternatif asc";
+		$query = "SELECT * FROM ahp_data_alternatif a, ahp_data_kriteria b, ahp_rangking c where a.id_alternatif=c.alternatif and b.id_kriteria=c.kriteria order by a.id_alternatif asc";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		

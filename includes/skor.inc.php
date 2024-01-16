@@ -15,10 +15,22 @@ class Skor{
 	public function __construct($db){
 		$this->conn = $db;
 	}
-	
-	function insert($a,$b,$c,$d){
+
+	function read($a, $b, $c, $e)
+	{
+		$query = "select * from " . $this->table_name . " where alternatif_pertama = '$a' and alternatif_kedua = '$b' and id_kriteria = '$c' and id_responden = '$e'";
+		$stmt = $this->conn->prepare($query);
+
+		if ($stmt->execute() && $stmt->rowCount() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function insert($a,$b,$c,$d, $e){
 		
-		$query = "insert into ".$this->table_name." values('$a','$b','','$c','$d')";
+		$query = "insert into ".$this->table_name." values('', '$e','$a','$b','','$c','$d')";
 		$stmt = $this->conn->prepare($query);
 		
 		if($stmt->execute()){
@@ -44,7 +56,7 @@ class Skor{
 
 	function insert3($a, $b, $c){
 		
-		$query = "insert into ahp_jum_alt_kri values('$a','$b','$c','')";
+		$query = "insert into ahp_jum_alt_kri values('','$a','$b','$c','','')";
 		$stmt = $this->conn->prepare($query);
 		
 		if($stmt->execute()){
@@ -80,7 +92,20 @@ class Skor{
 		}
 		
 	}
-	
+
+	function read5($a, $b)
+	{
+
+		$query = "select * from ahp_jum_alt_kri where id_alternatif = '$a' and id_kriteria = '$b'";
+		$stmt = $this->conn->prepare($query);
+
+		if ($stmt->execute() && $stmt->rowCount() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function readAll(){
 
 		$query = "SELECT * FROM ahp_data_alternatif";
@@ -99,14 +124,13 @@ class Skor{
 		return $stmt;
 	}
 
-	function readAll1($a, $b, $c){
+	function readAll1($a, $b, $c, $d){
 
-		$query = "SELECT * FROM ".$this->table_name." where alternatif_pertama = '$a' and alternatif_kedua = '$b' and id_kriteria='$c' LIMIT 0,1";
+		$query = "SELECT * FROM ".$this->table_name." where alternatif_pertama = '$a' and alternatif_kedua = '$b' and id_kriteria='$c' and id_responden = '$d' LIMIT 0,1";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
 		$this->kp = $row['nilai_analisa_alternatif'];
 	}
 
@@ -139,9 +163,9 @@ class Skor{
 		return $stmt->rowCount();
 	}
 
-	function readSum1($a,$b){
+	function readSum1($a,$b,$c){
 
-		$query = "SELECT sum(nilai_analisa_alternatif) as jumkr FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria='$b' ";
+		$query = "SELECT sum(nilai_analisa_alternatif) as jumkr FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria='$b' and id_responden = '$c'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -150,9 +174,9 @@ class Skor{
 		$this->nak = $row['jumkr'];
 	}
 	
-	function readSum2($a,$b){
+	function readSum2($a,$b,$c){
 
-		$query = "SELECT sum(hasil_analisa_alternatif) as jumkr2 FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria = '$b'";
+		$query = "SELECT sum(hasil_analisa_alternatif) as jumkr2 FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria = '$b' and id_responden= '$c'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -172,9 +196,9 @@ class Skor{
 		$this->bb = $row['bbkr'];
 	}
 	
-	function readAvg($a){
+	function readAvg($a,$c,$d){
 
-		$query = "SELECT avg(hasil_analisa_alternatif) as avgkr FROM ".$this->table_name." where alternatif_pertama = '$a'";
+		$query = "SELECT avg(hasil_analisa_alternatif) as avgkr FROM ".$this->table_name." where alternatif_pertama = '$a' and id_kriteria='$c' and id_responden = '$d'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -193,11 +217,22 @@ class Skor{
 
 		$this->kri = $row['nama_kriteria'];
 	}
+
+	function readRes($a){
+
+		$query = "SELECT * FROM ahp_data_kriteria where id_kriteria='$a'";
+		$stmt = $this->conn->prepare( $query );
+		$stmt->execute();
+		
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$this->kri = $row['nama_kriteria'];
+	}
 	
 	// update the product
-	function update($a,$b,$c,$d){
+	function update($a,$b,$c,$d,$e){
 
-		$query = "UPDATE  ".$this->table_name."  SET nilai_analisa_alternatif = '$b' WHERE alternatif_pertama = '$a' and alternatif_kedua = '$c' and id_kriteria = '$d'";
+		$query = "UPDATE  ".$this->table_name."  SET nilai_analisa_alternatif = '$b' WHERE alternatif_pertama = '$a' and alternatif_kedua = '$c' and id_kriteria = '$d' and id_responden = '$e'";
 
 		$stmt = $this->conn->prepare($query);
 		// execute the query
@@ -221,5 +256,105 @@ class Skor{
 			return false;
 		}
 	}
+	function read_alternatif_kriteria($a)
+	{
+		$query = "select * from " . $this->table_name . " where id_kriteria = '$a'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
+	function read_analisa_alternatif_kriteria($a,$b)
+	{
+		$query = "select * from " . $this->table_name . " where id_responden = '$a' and id_kriteria = '$b'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
+	function insert_matriks_perbandingan_alternatif($a, $b, $c,$d)
+	{
+
+		$query = "insert into ahp_matriks_perbandingan_alternatif values('','$a','$b','$c','$d')";
+		$stmt = $this->conn->prepare($query);
+
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function update_matriks_perbandingan_alternatif($a, $b, $c, $d)
+	{
+
+		$query = "UPDATE  ahp_matriks_perbandingan_alternatif  SET nilai_perbandingan = '$b' WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";
+
+		$stmt = $this->conn->prepare($query);
+		// execute the query
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}	
+
+	function read_all_matriks_perbandingan_alternatif()
+	{
+		$query = "select * from ahp_matriks_perbandingan_alternatif";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
+	function read_matriks_perbandingan_alternatif($a, $c, $d)
+	{
+		$query = "select * from ahp_matriks_perbandingan_alternatif WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";
+		$stmt = $this->conn->prepare($query);
+		if ($stmt->execute() && $stmt->rowCount() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function insert_normalisasi_alternatif($a,$b,$c,$d)
+	{
+		$query = "insert into ahp_normalisasi_alternatif values('','$a','$b','$c','$d')";
+		$stmt = $this->conn->prepare($query);
+
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function update_normalisasi_alternatif($a, $b, $c, $d)
+	{
+		$query = "UPDATE ahp_normalisasi_alternatif  SET nilai_normalisasi = '$b' WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";
+
+		$stmt = $this->conn->prepare($query);
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function read_normalisasi_alternatif($a, $c, $d)
+	{
+		$query = "select * from ahp_normalisasi_alternatif WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";
+		$stmt = $this->conn->prepare($query);
+		if ($stmt->execute() && $stmt->rowCount() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }
 ?>
