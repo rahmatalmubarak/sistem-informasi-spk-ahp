@@ -66,6 +66,8 @@ if (isset($_POST['hapus-contengan'])) {
                         <th width="10px"><input type="checkbox" name="select-all" id="select-all" /></th>
                         <th>ID Responden</th>
                         <th>Nama Responden</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Jabatan</th>
                         <th width="100px">Aksi</th>
                     </tr>
                 </thead>
@@ -75,6 +77,8 @@ if (isset($_POST['hapus-contengan'])) {
                         <th><input type="checkbox" name="select-all2" id="select-all2" /></th>
                         <th>ID Responden</th>
                         <th>Nama Responden</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Jabatan</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
@@ -88,6 +92,8 @@ if (isset($_POST['hapus-contengan'])) {
                             <td style="vertical-align:middle;"><input type="checkbox" value="<?php echo $row['id_responden'] ?>" name="checkbox[]" /></td>
                             <td style="vertical-align:middle;"><?php echo $row['id_responden'] ?></td>
                             <td style="vertical-align:middle;"><?php echo $row['nama'] ?></td>
+                            <td style="vertical-align:middle;"><?php echo $row['jenis_kelamin'] ?></td>
+                            <td style="vertical-align:middle;"><?php echo $row['jabatan'] ?></td>
                             <td style="text-align:center;vertical-align:middle;">
                                 <a href="data-responden-ubah.php?id=<?php echo $row['id_responden'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                 <a href="data-responden-hapus.php?id=<?php echo $row['id_responden'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>

@@ -4,6 +4,8 @@ class Responden{
 	private $conn;
 	private $table_name = "ahp_data_responden";
 	public $nama;
+	public $jenis_kelamin;
+	public $jabatan;
 	public $id;
 	
 	public function __construct($db){
@@ -11,9 +13,11 @@ class Responden{
 	}
 	function insert(){
 		
-		$query = "insert into ".$this->table_name." values('',?)";
+		$query = "insert into ".$this->table_name." values('',?,?,?)";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(1, $this->nama);
+		$stmt->bindParam(2, $this->jenis_kelamin);
+		$stmt->bindParam(3, $this->jabatan);
 
 		if($stmt->execute()){
 			return true;
@@ -53,13 +57,17 @@ class Responden{
 		$query = "UPDATE 
 					" . $this->table_name . " 
 				SET 
-					nama = :nm
+					nama = :nm,
+					jenis_kelamin = :jenis_kelamin,
+					jabatan = :jabatan
 				WHERE
 					id_responden = :id";
 
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(':nm', $this->nama);
+		$stmt->bindParam(':jenis_kelamin', $this->jenis_kelamin);
+		$stmt->bindParam(':jabatan', $this->jabatan);
 		$stmt->bindParam(':id', $this->id);
 
 		// execute the query

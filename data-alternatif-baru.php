@@ -6,8 +6,6 @@ if ($_POST) {
 	$eks = new Alternatif($db);
 
 	$eks->nama = $_POST['nama'];
-	$eks->jenis_kelamin = $_POST['jenis_kelamin'];
-	$eks->jabatan = $_POST['jabatan'];
 
 	if ($eks->insert()) {
 ?>
@@ -49,17 +47,6 @@ if ($_POST) {
 					<div class="form-group">
 						<label for="nama">Nama Alternatif</label>
 						<input type="text" class="form-control" id="nama" name="nama" required>
-					</div>
-					<div class="form-group">
-						<label for="jenis_kelamin">Jenis Kelamin</label>
-						<select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
-							<option value="laki-laki">Laki-laki</option>
-							<option value="perempuan">Perempuan</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="jabatan">Jabatan</label>
-						<input type="text" class="form-control" id="jabatan" name="jabatan" required>
 					</div>
 					<button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Simpan</button>
 					<button type="button" onclick="location.href='data-alternatif.php'" class="btn btn-success"><span class="fa fa-history"></span> Kembali</button>

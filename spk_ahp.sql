@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2024 at 08:02 AM
+-- Generation Time: Jan 18, 2024 at 08:46 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -171,8 +171,6 @@ INSERT INTO `ahp_analisa_kriteria` (`id`, `id_responden`, `kriteria_pertama`, `n
 CREATE TABLE `ahp_data_alternatif` (
   `id_alternatif` int(2) NOT NULL,
   `nama_alternatif` varchar(45) NOT NULL,
-  `jenis_kelamin` varchar(50) NOT NULL,
-  `jabatan` varchar(100) NOT NULL,
   `hasil_akhir` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -180,12 +178,13 @@ CREATE TABLE `ahp_data_alternatif` (
 -- Dumping data for table `ahp_data_alternatif`
 --
 
-INSERT INTO `ahp_data_alternatif` (`id_alternatif`, `nama_alternatif`, `jenis_kelamin`, `jabatan`, `hasil_akhir`) VALUES
-(1, 'Ahmadul Khalid', '', '', 0.332179749870592),
-(2, 'M. Syahrul Ridha', '', '', 0.12222550138575),
-(3, 'Amelia Putri', '', '', 0.16130360370290692),
-(6, 'asdzxczxc', 'laki-laki', 'asdzxc', 0.17472996067465493),
-(8, 'm,mm,m', 'laki-laki', ',mamsd', 0.14497885472897332);
+INSERT INTO `ahp_data_alternatif` (`id_alternatif`, `nama_alternatif`, `hasil_akhir`) VALUES
+(1, 'Ahmadul Khalid', 0.726189564159986),
+(2, 'M. Syahrul Ridha', 0.481961152182656),
+(3, 'Amelia Putri', 0.426281045174002),
+(6, 'asdzxczxc', 0.3682266135402276),
+(8, 'm,mm,m', 0.38358031133453563),
+(9, 'asd', 0);
 
 -- --------------------------------------------------------
 
@@ -218,15 +217,17 @@ INSERT INTO `ahp_data_kriteria` (`id_kriteria`, `nama_kriteria`, `jumlah_kriteri
 
 CREATE TABLE `ahp_data_responden` (
   `id_responden` int(11) NOT NULL,
-  `nama` varchar(3) NOT NULL
+  `nama` varchar(3) NOT NULL,
+  `jenis_kelamin` varchar(10) NOT NULL,
+  `jabatan` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ahp_data_responden`
 --
 
-INSERT INTO `ahp_data_responden` (`id_responden`, `nama`) VALUES
-(2, 'R6');
+INSERT INTO `ahp_data_responden` (`id_responden`, `nama`, `jenis_kelamin`, `jabatan`) VALUES
+(3, 'asd', 'laki-laki', 'asd');
 
 -- --------------------------------------------------------
 
@@ -248,26 +249,26 @@ CREATE TABLE `ahp_jum_alt_kri` (
 --
 
 INSERT INTO `ahp_jum_alt_kri` (`id_jum_alt_kri`, `id_alternatif`, `id_kriteria`, `jumlah_alt_kri`, `skor_alt_kri`, `hasil_alt_kri`) VALUES
-(13, 1, 'C1', 8, 1, 0.2074104469641),
-(14, 2, 'C1', 7.530303030303, 1, 0.075935982748856),
-(15, 3, 'C1', 3.33333333333333, 1, 0.13087887371316),
-(16, 1, 'C2', 3.58333333333333, 0.588108180056682, 0.070107042336459),
-(17, 2, 'C2', 10.060606060606, 0.1150754835812402, 0.013717887410682),
-(18, 3, 'C2', 5.83333333333333, 0.0890518812814582, 0.010615672801114),
-(19, 1, 'C3', 3.58333333333333, 0.46993364951393596, 0.032399332048599),
-(20, 2, 'C3', 10.060606060606, 0.2800196218219982, 0.019305807781413),
-(21, 3, 'C3', 5.83333333333333, 0.17029926023930217, 0.011741194285259),
-(22, 1, 'C4', 3.58333333333333, 0.46993364951393596, 0.022262928521434),
-(23, 2, 'C4', 10.060606060606, 0.2800196218219982, 0.013265823444799),
-(24, 3, 'C4', 5.83333333333333, 0.17029926023930217, 0.0080678629033739),
-(25, 6, 'C1', 8, 1, 0.16035737964671),
-(27, 6, 'C3', 8.530000000000001, 0.03987373421238474, 0.002749073951399),
-(29, 6, 'C2', 8.530000000000001, 0.0816600053180896, 0.0097345040320286),
-(31, 6, 'C4', 8.530000000000001, 0.03987373421238474, 0.0018890030445173),
-(33, 8, 'C1', 4.58, 1, 0.1253081522772),
-(34, 8, 'C2', 8.33, 0.12610444976253482, 0.015032625455857),
-(35, 8, 'C3', 8.33, 0.039873734212384736, 0.002749073951399),
-(36, 8, 'C4', 8.33, 0.039873734212384736, 0.0018890030445173);
+(13, 1, 'C1', 8, 1, 0.32304875793253),
+(14, 2, 'C1', 7.530303030303, 1, 0.32304875793253),
+(15, 3, 'C1', 3.33333333333333, 1, 0.32304875793253),
+(16, 1, 'C2', 3.58333333333333, 0.588108180056682, 0.20316679350639),
+(17, 2, 'C2', 10.060606060606, 0.1150754835812402, 0.039753769464904),
+(18, 3, 'C2', 5.83333333333333, 0.0890518812814582, 0.030763702647227),
+(19, 1, 'C3', 3.58333333333333, 0.46993364951393596, 0.090171658094186),
+(20, 2, 'C3', 10.060606060606, 0.2800196218219982, 0.053730635430582),
+(21, 3, 'C3', 5.83333333333333, 0.17029926023930217, 0.032677308134615),
+(22, 1, 'C4', 3.58333333333333, 0.46993364951393596, 0.10980235462688),
+(23, 2, 'C4', 10.060606060606, 0.2800196218219982, 0.06542798935464),
+(24, 3, 'C4', 5.83333333333333, 0.17029926023930217, 0.03979127645963),
+(25, 6, 'C1', 8, 1, 0.32304875793253),
+(27, 6, 'C3', 8.530000000000001, 0.03987373421238474, 0.0076510391031936),
+(29, 6, 'C2', 8.530000000000001, 0.0816600053180896, 0.028210118479549),
+(31, 6, 'C4', 8.530000000000001, 0.03987373421238474, 0.009316698024955),
+(33, 8, 'C1', 4.58, 1, 0.32304875793253),
+(34, 8, 'C2', 8.33, 0.12610444976253482, 0.043563816273857),
+(35, 8, 'C3', 8.33, 0.039873734212384736, 0.0076510391031936),
+(36, 8, 'C4', 8.33, 0.039873734212384736, 0.009316698024955);
 
 -- --------------------------------------------------------
 
@@ -788,13 +789,13 @@ ALTER TABLE `ahp_analisa_kriteria`
 -- AUTO_INCREMENT for table `ahp_data_alternatif`
 --
 ALTER TABLE `ahp_data_alternatif`
-  MODIFY `id_alternatif` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_alternatif` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ahp_data_responden`
 --
 ALTER TABLE `ahp_data_responden`
-  MODIFY `id_responden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_responden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ahp_jum_alt_kri`

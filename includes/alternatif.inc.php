@@ -9,8 +9,6 @@ class Alternatif{
 	public $sa;
 	public $hs;
 	public $nama;
-	public $jenis_kelamin;
-	public $jabatan;
 	
 	public function __construct($db){
 		$this->conn = $db;
@@ -18,11 +16,9 @@ class Alternatif{
 	
 	function insert(){
 		
-		$query = "insert into ".$this->table_name." values('',?,?,?,'')";
+		$query = "insert into ".$this->table_name." values('',?,'')";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(1, $this->nama);
-		$stmt->bindParam(2, $this->jenis_kelamin);
-		$stmt->bindParam(3, $this->jabatan);
 		
 		if($stmt->execute()){
 			return true;
@@ -61,8 +57,6 @@ class Alternatif{
 		
 		$this->id = $row['id_alternatif'];
 		$this->nama = $row['nama_alternatif'];
-		$this->jenis_kelamin = $row['jenis_kelamin'];
-		$this->jabatan = $row['jabatan'];
 		$this->sa = $row['skor_alternatif'];
 		$this->hs = $row['hasil_akhir'];
 	}
@@ -73,17 +67,13 @@ class Alternatif{
 		$query = "UPDATE 
 					" . $this->table_name . " 
 				SET 
-					nama_alternatif = :nama,
-					jenis_kelamin = :jenis_kelamin,
-					jabatan = :jabatan
+					nama_alternatif = :nama
 				WHERE
 					id_alternatif = :id";
 
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(':nama', $this->nama);
-		$stmt->bindParam(':jenis_kelamin', $this->jenis_kelamin);
-		$stmt->bindParam(':jabatan', $this->jabatan);
 		$stmt->bindParam(':id', $this->id);
 		
 		// execute the query
