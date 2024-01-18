@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2024 at 08:46 AM
+-- Generation Time: Jan 18, 2024 at 08:59 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -217,7 +217,7 @@ INSERT INTO `ahp_data_kriteria` (`id_kriteria`, `nama_kriteria`, `jumlah_kriteri
 
 CREATE TABLE `ahp_data_responden` (
   `id_responden` int(11) NOT NULL,
-  `nama` varchar(3) NOT NULL,
+  `nama` varchar(50) NOT NULL,
   `jenis_kelamin` varchar(10) NOT NULL,
   `jabatan` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
