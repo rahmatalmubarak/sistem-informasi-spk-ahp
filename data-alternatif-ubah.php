@@ -11,25 +11,27 @@ $eks->readOne();
 
 if ($_POST) {
 
-    $eks->nm = $_POST['nm'];
+    $eks->nama = $_POST['nama'];
+    $eks->jenis_kelamin = $_POST['jenis_kelamin'];
+    $eks->jabatan = $_POST['jabatan'];
 
     if ($eks->update()) {
         echo "<script>location.href='data-alternatif.php'</script>";
     } else {
-        ?>
+?>
         <script type="text/javascript">
-            window.onload = function () {
+            window.onload = function() {
                 showStickyErrorToast();
             };
         </script>
-        <?php
+<?php
     }
 }
 ?>
 <div class="row">
     <!--		  <div class="col-xs-12 col-sm-12 col-md-2">
     <?php
-//			include_once 'sidebar.php';
+    //			include_once 'sidebar.php';
     ?>
                       </div>-->
     <br>
@@ -47,14 +49,27 @@ if ($_POST) {
 
                 <form method="post">
                     <div class="form-group">
-                        <label for="kt">Nama Alternatif</label>
-                        <input type="text" class="form-control" id="nm" name="nm" value="<?php echo $eks->nm; ?>">
+                        <label for="nama">Nama Alternatif</label>
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $eks->nama; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                            <option value="laki-laki" <?php if ($eks->jenis_kelamin == 'laki-laki') echo 'selected'; ?>>Laki-laki</option>
+                            <option value="perempuan" <?php if ($eks->jenis_kelamin == 'perempuan') echo 'selected'; ?>>Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jabatan">Jabatan</label>
+                        <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?php echo $eks->jabatan; ?>" required>
                     </div>
                     <button type="submit" class="btn btn-primary"><span class="fa fa-edit"></span> Ubah</button>
                     <button type="button" onclick="location.href = 'data-alternatif.php'" class="btn btn-success"><span class="fa fa-history"></span> Kembali</button>
                 </form>
 
-            </div></div></div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php
 include_once 'footer.php';

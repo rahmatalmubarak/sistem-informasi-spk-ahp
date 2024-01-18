@@ -24,7 +24,7 @@ $stmtx2y = $pro->readBob();
 		//			include_once 'sidebar.php';
 		?>
 	</div>-->
-	<div class="col-xs-12 col-sm-12 col-md-12">
+	<div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 40px;">
 		<br />
 
 		<div class="row">

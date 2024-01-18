@@ -1,6 +1,7 @@
 <?php
 include "includes/config.php";
 session_start();
+
 if (!isset($_SESSION['nama_lengkap'])) {
     echo "<script>location.href='login.php'</script>";
 }
@@ -22,6 +23,7 @@ $db = $config->getConnection();
     <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="css/jquery.toastmessage.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/font-awesome.min.css">
+
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 
 
@@ -32,7 +34,7 @@ $db = $config->getConnection();
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 </head>
-<!-- <style>
+<style>
     .btn-group,
     .btn-group-vertical {
         position: relative;
@@ -61,9 +63,10 @@ $db = $config->getConnection();
     }
 
     .btn {
+        font-family: 'Oswald', sans-serif;
         display: inline-block;
-        font-weight: 400;
-        line-height: 1.5;
+        font-weight: 500;
+        /* line-height: 1.5; */
         color: #212529;
         text-align: center;
         text-decoration: none;
@@ -72,14 +75,38 @@ $db = $config->getConnection();
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
-        background-color: #0d6efd;
         border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        border-radius: 0.25rem;
+        font-size: 1.4rem;
+        background-color: #2576ed;
+        border-radius: 0.25rem 0.25rem;
         transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
-</style> -->
+
+    .btn-group {
+        border-radius: 0.25rem 0.25rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-outline-primary {
+        color: #ffffff;
+    }
+
+    .btn-outline-primary:hover {
+        color: #ffffff;
+        background-color: #105bc9;
+    }
+
+    .btn-check:active+.btn-outline-primary,
+    .btn-check:checked+.btn-outline-primary,
+    .btn-outline-primary.active,
+    .btn-outline-primary.dropdown-toggle.show,
+    .btn-outline-primary:active {
+        color: #fff;
+        background-color: #105bc9;
+        border-color: #0d6efd;
+    }
+</style>
 
 <body>
 

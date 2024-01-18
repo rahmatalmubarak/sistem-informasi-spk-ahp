@@ -1,12 +1,21 @@
 <?php
 include_once 'header.php';
 include_once 'includes/kriteria.inc.php';
+
+include_once 'includes/bobot.inc.php';
+include_once 'includes/kriteria.inc.php';
+$pro = new Bobot($db);
+
 $pro1 = new Kriteria($db);
 $count1 = $pro1->countAll();
 include_once 'includes/nilai.inc.php';
 $pro2 = new Nilai($db);
 include_once 'includes/kriteria.inc.php';
 $pro3 = new Kriteria($db);
+
+if (isset($_POST['hapus'])) {
+	$pro->delete();
+}
 /*if($_POST){
 	
 	include_once 'includes/bobot.inc.php';
@@ -53,7 +62,7 @@ window.onload=function(){
 		</p>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form method="post" action="analisa-kriteria-tabel.php">
+				<form method="post" action="analisa-kriteria-input.php" id="form_kriteria">
 					<div class="row">
 						<div class="col-xs-12 col-md-3">
 							<div class="form-group">
@@ -62,7 +71,7 @@ window.onload=function(){
 						</div>
 						<div class="col-xs-12 col-md-9">
 							<div class="form-group">
-								<select class="form-control" id="responden" name="responden">
+								<select class="form-control" id="kriteria_responden" name="responden">
 									<option value="R1">Responden 1</option>
 									<option value="R2">Responden 2</option>
 									<option value="R3">Responden 3</option>
@@ -78,7 +87,7 @@ window.onload=function(){
 						</div>
 						<div class="col-xs-12 col-md-6">
 							<div class="form-group">
-								<label>Pernilaian</label>
+								<label>Penilaian</label>
 							</div>
 						</div>
 						<div class="col-xs-12 col-md-3">
@@ -106,8 +115,25 @@ window.onload=function(){
 									</div>
 									<div class="col-xs-12 col-md-6">
 										<div class="form-group">
-											<select class="form-control" name="nl<?php echo $row[$i]['id_kriteria'];
-																					echo $row[$j]['id_kriteria'] ?>">
+											<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+												<?php
+												$stmt1 = $pro2->readAll();
+												while ($row2 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+												?>
+													<input type="radio" class="btn-check" name="nl<?php echo $row[$i]['id_kriteria'];
+																									echo $row[$j]['id_kriteria']; ?>" id="nl<?php echo $row[$i]['id_kriteria'];
+																																											echo $row[$j]['id_kriteria'];
+																																											echo str_replace('.', '', $row2['jum_nilai']) ?>" value="<?php echo $row2['jum_nilai'] ?>">
+													<label class="btn btn-outline-primary" for="nl<?php echo $row[$i]['id_kriteria'];
+																									echo $row[$j]['id_kriteria'];
+																									echo str_replace('.', '', $row2['jum_nilai']) ?>"><?php echo $row2['label'] ?></label>
+												<?php
+												}
+												?>
+											</div>
+
+											<!-- <select class="form-control" name="nl<?php echo $row[$i]['id_kriteria'];
+																						echo $row[$j]['id_kriteria'] ?>">
 												<?php
 												$stmt1 = $pro2->readAll();
 												while ($row2 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
@@ -116,7 +142,7 @@ window.onload=function(){
 												<?php
 												}
 												?>
-											</select>
+											</select> -->
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-3">
@@ -132,7 +158,10 @@ window.onload=function(){
 						}
 					}
 					?>
-					<button type="submit" name="subankr" class="btn btn-primary"> Selanjutnya <span class="fa fa-arrow-right"></span></button>
+					<div style="display: flex;justify-content: space-between;">
+						<button type="submit" name="subankr" class="btn btn-primary"> Tambah <span class="fa fa-plus"></span></button>
+						<a href="analisa-kriteria-tabel.php" id="hasil_kriteria" class="btn btn-primary"> Hasil <span class="fa fa-arrow-right"></span></a>
+					</div>
 				</form>
 
 			</div>

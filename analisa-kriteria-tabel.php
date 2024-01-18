@@ -1,44 +1,31 @@
 <?php
+//  ob_start();
 include_once 'header.php';
 include_once 'includes/bobot.inc.php';
 include_once 'includes/kriteria.inc.php';
 $pro = new Bobot($db);
-$responden = $_POST['responden'];
+$responden = $_GET['responden'];
 $stmt2 = $pro->readAll2();
 $stmt3 = $pro->readAll2();
 $jum_kriteria = $pro->countAll();
-if (isset($_POST['subankr'])) {
-	unset($_POST['subankr']);
-	unset($_POST['responden']);
-	$post = array_chunk($_POST, 3);
-	foreach ($post as $key => $alternatif) {
-		$pro->read2($alternatif[0], $alternatif[2], $responden) ? $pro->update($alternatif[0], $alternatif[1], $alternatif[2], $responden) : $pro->insert($alternatif[0], $alternatif[1], $alternatif[2], $responden);
-	}
 
-	foreach ($post as $key => $alternatif) {
-		$pro->read2($alternatif[2], $alternatif[0], $responden) ? $pro->update($alternatif[2], 1 / $alternatif[1], $alternatif[0], $responden) : $pro->insert($alternatif[2], 1 / $alternatif[1], $alternatif[0], $responden);
-	}
+$run = false;
+if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R2')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R3')->rowCount() > 0) {
+	$run = true;
+	$all_kriteria_R1 = $pro->read_analisa_kriteria_all('R1')->fetchAll();
+	$all_kriteria_R2 = $pro->read_analisa_kriteria_all('R2')->fetchAll();
+	$all_kriteria_R3 = $pro->read_analisa_kriteria_all('R3')->fetchAll();
 
+	$all_kriteria_total = [];
+	foreach ($all_kriteria_R1 as $key => $analisa_kriteria) {
+		$all_kriteria_total[$key]['nilai_perbandingan'] = pow($all_kriteria_R1[$key]['nilai_analisa_kriteria'] * $all_kriteria_R2[$key]['nilai_analisa_kriteria'] * $all_kriteria_R3[$key]['nilai_analisa_kriteria'], 0.33);
+		$all_kriteria_total[$key]['kriteria_pertama'] = $all_kriteria_R1[$key]['kriteria_pertama'];
+		$all_kriteria_total[$key]['kriteria_kedua'] = $all_kriteria_R1[$key]['kriteria_kedua'];
+	}
+} else {
 	$run = false;
-	if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R2')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R3')->rowCount() > 0) {
-		$run = true;
-		$all_kriteria_R1 = $pro->read_analisa_kriteria_all('R1')->fetchAll();
-		$all_kriteria_R2 = $pro->read_analisa_kriteria_all('R2')->fetchAll();
-		$all_kriteria_R3 = $pro->read_analisa_kriteria_all('R3')->fetchAll();
+}
 
-		$all_kriteria_total = [];
-		foreach ($all_kriteria_R1 as $key => $analisa_kriteria) {
-			$all_kriteria_total[$key]['nilai_perbandingan'] = pow($all_kriteria_R1[$key]['nilai_analisa_kriteria'] * $all_kriteria_R2[$key]['nilai_analisa_kriteria'] * $all_kriteria_R3[$key]['nilai_analisa_kriteria'], 0.33);
-			$all_kriteria_total[$key]['kriteria_pertama'] = $all_kriteria_R1[$key]['kriteria_pertama'];
-			$all_kriteria_total[$key]['kriteria_kedua'] = $all_kriteria_R1[$key]['kriteria_kedua'];
-		}
-	} else {
-		$run = false;
-	}
-}
-if (isset($_POST['hapus'])) {
-	$pro->delete();
-}
 ?>
 <div class="row">
 	<!--	<div class="col-xs-12 col-sm-12 col-md-2">
@@ -52,7 +39,8 @@ if (isset($_POST['hapus'])) {
 			<li><a href="analisa-kriteria.php"><span class="fa fa-bomb"></span> Analisa Kriteria</a></li>
 			<li class="active"><span class="fa fa-table"></span> Tabel Analisa Kriteria</li>
 		</ol>
-		<form method="post">
+
+		<form method="post" action="analisa-kriteria.php">
 			<div class="row">
 				<div class="col-md-6 text-left">
 					<strong style="font-size:18pt;"><span class="fa fa-table"></span> Perbandingan Kriteria</strong>
@@ -133,6 +121,7 @@ if (isset($_POST['hapus'])) {
 		</form>
 
 		<?php
+
 		if ($run) {
 		?>
 			<!-- Matriks perbandingan -->
@@ -165,7 +154,7 @@ if (isset($_POST['hapus'])) {
 							?>
 								<td style="vertical-align:middle;">
 									<?php
-									
+
 									if ($row3['id_kriteria'] == $row4['id_kriteria']) {
 										echo '1';
 										if ($pro->read_matriks_perbandingan($row3['id_kriteria'], $row4['id_kriteria'])) {
@@ -383,5 +372,6 @@ if (isset($_POST['hapus'])) {
 	</div>
 </div>
 <?php
+
 include_once 'footer.php';
 ?>

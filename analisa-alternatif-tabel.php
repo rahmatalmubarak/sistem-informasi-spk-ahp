@@ -4,8 +4,8 @@ include_once 'includes/bobot.inc.php';
 include_once 'includes/skor.inc.php';
 $pro = new Skor($db);
 $kriteria = new Bobot($db);
-$altkriteria = isset($_POST['kriteria']) ? $_POST['kriteria'] : $_GET['kriteria'];
-$responden = isset($_POST['responden']) ? $_POST['responden'] : $_GET['responden'];
+$altkriteria =$_GET['kriteria'];
+$responden = $_GET['responden'];
 
 if (isset($_POST['kriteria'])) {
 	unset($_POST['kriteria']);
@@ -18,18 +18,9 @@ $stmt3 = $pro->readAll2();
 if (isset($altkriteria)) {
 	$pro->readKri($altkriteria);
 	$count = $pro->countAll();
-	if (isset($_POST['subankr'])) {
+	if (isset($_GET['responden'])) {
 		unset($_POST['responden']);
 		unset($_POST['subankr']);
-		$post = array_chunk($_POST, 3);
-		foreach ($post as $key => $alternatif) {
-			$pro->read($alternatif[0], $alternatif[2], $altkriteria, $responden) ? $pro->update($alternatif[0], $alternatif[1], $alternatif[2], $altkriteria, $responden) : $pro->insert($alternatif[0], $alternatif[1], $alternatif[2], $altkriteria, $responden);
-		}
-
-		foreach ($post as $key => $alternatif) {
-			$pro->read($alternatif[2], $alternatif[0], $altkriteria, $responden) ? $pro->update($alternatif[2], 1 / $alternatif[1], $alternatif[0], $altkriteria, $responden) : $pro->insert($alternatif[2], 1 / $alternatif[1], $alternatif[0], $altkriteria, $responden);
-		}
-
 		$all_kriteria = $kriteria->readAll()->fetchAll();
 
 		$run = false;
@@ -43,9 +34,9 @@ if (isset($altkriteria)) {
 				$run = false;
 			}
 		}
-
 		if ($run) {
 			$all_alternatif_total = [];
+			// var_dump($all_alternatif_R3);exit();
 			foreach ($all_alternatif_R1 as $key => $alternatifs) {
 				foreach ($alternatifs as $key2 => $alternatif) {
 					$all_alternatif_total[$key][$key2]['nilai_perbandingan'] = pow($all_alternatif_R1[$key][$key2]['nilai_analisa_alternatif'] * $all_alternatif_R2[$key][$key2]['nilai_analisa_alternatif'] * $all_alternatif_R3[$key][$key2]['nilai_analisa_alternatif'], 0.33);
@@ -56,19 +47,16 @@ if (isset($altkriteria)) {
 			}
 		}
 	}
-	if (isset($_POST['hapus'])) {
-		$pro->delete();
-	}
+	
 ?>
 	<div class="row">
-
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<ol class="breadcrumb">
 				<li><a href="index.php"><span class="fa fa-home"></span> Beranda</a></li>
 				<li><a href="analisa-alternatif.php"><span class="fa fa-balance-scale"></span> Analisa Alternatif</a></li>
 				<li class="active"><span class="fa fa-table"></span> Tabel Analisa Alternatif</li>
 			</ol>
-			<form method="post">
+			<form method="post" action="analisa-alternatif.php">
 				<div class="row">
 					<div class="col-md-6 text-left">
 						<strong style="font-size:18pt;"><span class="fa fa-table"></span> Alternatif Menurut Kriteria</strong>
@@ -79,78 +67,78 @@ if (isset($altkriteria)) {
 				</div>
 				<br />
 
-				<table width="100%" class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th><?php echo $pro->kri ?></th>
-							<?php
-							while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-							?>
-								<th><?php echo $row2['nama_alternatif'] ?></th>
-							<?php
-							}
-							?>
-						</tr>
-					</thead>
+			</form>
 
-					<tbody>
+			<table width="100%" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th><?php echo $pro->kri ?></th>
 						<?php
-						while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+						while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
 						?>
-							<tr>
-								<th style="vertical-align:middle;"><?php echo $row3['nama_alternatif'] ?></th>
-								<?php
-								$stmt4 = $pro->readAll2();
-								while ($row4 = $stmt4->fetch(PDO::FETCH_ASSOC)) {
-								?>
-									<td style="vertical-align:middle;">
-										<?php
-										if ($row3['id_alternatif'] == $row4['id_alternatif']) {
-											echo '1';
-											if ($pro->read($row3['id_alternatif'], $row4['id_alternatif'], $altkriteria, $responden)) {
-												$pro->update($row3['id_alternatif'], '1', $row4['id_alternatif'], $altkriteria, $responden);
-											} else {
-												$pro->insert($row3['id_alternatif'], '1', $row4['id_alternatif'], $altkriteria, $responden);
-											}
-										} else {
-											$pro->readAll1($row3['id_alternatif'], $row4['id_alternatif'], $altkriteria, $responden);
-											echo number_format($pro->kp, 3, '.', ',');
-										}
-										?>
-									</td>
-								<?php
-								}
-								?>
-							</tr>
+							<th><?php echo $row2['nama_alternatif'] ?></th>
 						<?php
 						}
 						?>
-					</tbody>
-					<tfoot>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<?php
+					while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+					?>
 						<tr>
-							<th>Jumlah</th>
+							<th style="vertical-align:middle;"><?php echo $row3['nama_alternatif'] ?></th>
 							<?php
-							$stmt5 = $pro->readAll2();
-							while ($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
+							$stmt4 = $pro->readAll2();
+							while ($row4 = $stmt4->fetch(PDO::FETCH_ASSOC)) {
 							?>
-								<th><?php
-									$pro->readSum1($row5['id_alternatif'], $altkriteria, $responden);
-									echo number_format($pro->nak, 3, '.', ',');
-									if ($pro->read5($row5['id_alternatif'], $altkriteria)) {
-										$pro->insert5($pro->nak, $row5['id_alternatif'], $altkriteria);
+								<td style="vertical-align:middle;">
+									<?php
+									if ($row3['id_alternatif'] == $row4['id_alternatif']) {
+										echo '1';
+										if ($pro->read($row3['id_alternatif'], $row4['id_alternatif'], $altkriteria, $responden)) {
+											$pro->update($row3['id_alternatif'], '1', $row4['id_alternatif'], $altkriteria, $responden);
+										} else {
+											$pro->insert($row3['id_alternatif'], '1', $row4['id_alternatif'], $altkriteria, $responden);
+										}
 									} else {
-										$pro->insert3($row5['id_alternatif'], $altkriteria, $pro->nak);
+										$pro->readAll1($row3['id_alternatif'], $row4['id_alternatif'], $altkriteria, $responden);
+										echo number_format($pro->kp, 3, '.', ',');
 									}
-									?></th>
+									?>
+								</td>
 							<?php
 							}
 							?>
 						</tr>
-					</tfoot>
+					<?php
+					}
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Jumlah</th>
+						<?php
+						$stmt5 = $pro->readAll2();
+						while ($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
+						?>
+							<th><?php
+								$pro->readSum1($row5['id_alternatif'], $altkriteria, $responden);
+								echo number_format($pro->nak, 3, '.', ',');
+								if ($pro->read5($row5['id_alternatif'], $altkriteria)) {
+									$pro->insert5($pro->nak, $row5['id_alternatif'], $altkriteria);
+								} else {
+									$pro->insert3($row5['id_alternatif'], $altkriteria, $pro->nak);
+								}
+								?></th>
+						<?php
+						}
+						?>
+					</tr>
+				</tfoot>
 
-				</table>
-			</form>
-
+			</table>
 			<?php
 			if ($run) {
 			?>
@@ -323,17 +311,17 @@ if (isset($altkriteria)) {
 				</table>
 
 			<?php
-					} else {
-					?>
-						<div class="row">
-							<div class="col-xs-12 text-center">
-								<strong style="font-size:13pt;">Responden Belum Lengkap, <a href="/sistem-informasi-spk-uin-ahp/analisa-alternatif.php">Klik untuk melengkapi</a></strong>
-							</div>
-						</div>
-					<?php
-					}
-					?>
-			
+			} else {
+			?>
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<strong style="font-size:13pt;">Responden Belum Lengkap, <a href="/sistem-informasi-spk-uin-ahp/analisa-alternatif.php">Klik untuk melengkapi</a></strong>
+					</div>
+				</div>
+			<?php
+			}
+			?>
+
 
 
 		</div>

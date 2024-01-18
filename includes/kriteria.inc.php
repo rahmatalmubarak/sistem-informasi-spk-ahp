@@ -117,5 +117,13 @@ class Kriteria{
 			return false;
 		}
 	}
+
+	public function get_kriteria_responden($a)
+	{
+		$query = "SELECT * FROM ahp_analisa_kriteria WHERE id_responden = '$a'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
 }
 ?>

@@ -8,6 +8,9 @@ class Alternatif{
 	public $nm;
 	public $sa;
 	public $hs;
+	public $nama;
+	public $jenis_kelamin;
+	public $jabatan;
 	
 	public function __construct($db){
 		$this->conn = $db;
@@ -15,10 +18,11 @@ class Alternatif{
 	
 	function insert(){
 		
-		$query = "insert into ".$this->table_name." values(?,?,'')";
+		$query = "insert into ".$this->table_name." values('',?,?,?,'')";
 		$stmt = $this->conn->prepare($query);
-		$stmt->bindParam(1, $this->id);
-		$stmt->bindParam(2, $this->nm);
+		$stmt->bindParam(1, $this->nama);
+		$stmt->bindParam(2, $this->jenis_kelamin);
+		$stmt->bindParam(3, $this->jabatan);
 		
 		if($stmt->execute()){
 			return true;
@@ -56,7 +60,9 @@ class Alternatif{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		
 		$this->id = $row['id_alternatif'];
-		$this->nm = $row['nama_alternatif'];
+		$this->nama = $row['nama_alternatif'];
+		$this->jenis_kelamin = $row['jenis_kelamin'];
+		$this->jabatan = $row['jabatan'];
 		$this->sa = $row['skor_alternatif'];
 		$this->hs = $row['hasil_akhir'];
 	}
@@ -67,13 +73,17 @@ class Alternatif{
 		$query = "UPDATE 
 					" . $this->table_name . " 
 				SET 
-					nama_alternatif = :nm
+					nama_alternatif = :nama,
+					jenis_kelamin = :jenis_kelamin,
+					jabatan = :jabatan
 				WHERE
 					id_alternatif = :id";
 
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindParam(':nm', $this->nm);
+		$stmt->bindParam(':nama', $this->nama);
+		$stmt->bindParam(':jenis_kelamin', $this->jenis_kelamin);
+		$stmt->bindParam(':jabatan', $this->jabatan);
 		$stmt->bindParam(':id', $this->id);
 		
 		// execute the query
@@ -109,6 +119,14 @@ class Alternatif{
 		}else{
 			return false;
 		}
+	}
+
+	public function get_alternatif_responden($a, $b)
+	{
+		$query = "SELECT * FROM ahp_analisa_alternatif WHERE id_responden = '$a' and id_kriteria = '$b'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
 	}
 }
 ?>
