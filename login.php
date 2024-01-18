@@ -28,7 +28,7 @@ if($_POST){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>SPK Penerimaan Karyawan Baru di CV.PUTRA MANDIRI</title>
+    <title>Penerimaan Beasiswa PPA UIN</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +60,7 @@ if($_POST){
 		  <div class="col-xs-12 col-sm-4 col-md-4">
 		  	
 		  	<div style="margin-top: 100px;" class="panel panel-default"><div class="panel-body">
-		  		<div class="text-center"><h4>Member Area</h4></div>
+		  		<div class="text-center"><h4>Login</h4></div>
 		  		<form method="post">
 				  <div class="form-group">
 				    <label for="InputUsername1">Username</label>
@@ -70,7 +70,6 @@ if($_POST){
 				    <label for="InputPassword1">Password</label>
 				    <input type="password" class="form-control" name="password" id="InputPassword1" placeholder="Kata Sandi">
 				  </div>
-				  <p><small style="color:#999;">Username: admin dan Password: admin</small></p>
 				  <button type="submit" class="btn btn-primary">Login</button>
 				</form>
 		  	</div></div>

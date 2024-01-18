@@ -131,7 +131,7 @@ $db = $config->getConnection();
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-file "></i> Input Data <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li role="presentation"><a href="nilai.php"><span class="fa fa-modx"></span> Data Nilai</a></li>
+                            <li role="presentation"><a href="data-responden.php"><span class="fa fa-modx"></span> Data Responden</a></li>
                             <li role="presentation"><a href="data-kriteria.php"><span class="fa fa-bank"></span> Data Kriteria</a></li>
                             <li role="presentation"><a href="data-alternatif.php"><span class="fa fa-book"></span> Data Alternatif</a></li>
 
@@ -166,7 +166,6 @@ $db = $config->getConnection();
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="profil.php"><span class="fa fa-user"></span> Profil</a></li>
                             <li><a href="user.php"><span class="fa fa-users"></span> Manejer Pengguna</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="logout.php"><span class="fa fa-sign-out"></span> Logout</a></li>
