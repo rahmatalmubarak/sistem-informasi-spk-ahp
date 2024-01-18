@@ -27,7 +27,7 @@ if ($_POST) {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>Penerimaan Beasiswa PPA UIN</title>
+	<title>Penerimaan Beasiswa PPA UIN Imam Bonjol Padang</title>
 
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,14 +40,14 @@ if ($_POST) {
     <![endif]-->
 </head>
 
-<body style="background-image:url(images/bg2.jpg); background-size: cover; background-position-y: -50px;">
+<body style="background-image:url(images/bg2.jpg); background-size: cover; background-position-y: -150px;">
 
 	<nav class="navbar navbar-default navbar-static-top">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 
-				<a class="navbar-brand" href="">Penerimaan beasiswa PPA UIN</a>
+				<a class="navbar-brand" href="">Penerimaan beasiswa PPA UIN Imam Bonjol Padang</a>
 			</div>
 
 
@@ -55,7 +55,7 @@ if ($_POST) {
 	</nav>
 
 	<div class="container">
-		<div class="row" >
+		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-4">&nbsp;</div>
 			<div class="col-xs-12 col-sm-4 col-md-4">
 

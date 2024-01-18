@@ -159,13 +159,8 @@ window.onload=function(){
 												$stmt1 = $pro2->readAll();
 												while ($row2 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
 												?>
-													<input type="radio" class="btn-check" name="nl<?php echo $row[$i]['id_alternatif'];
-																									echo $row[$j]['id_alternatif']; ?>" id="nl<?php echo $row[$i]['id_alternatif'];
-																																												echo $row[$j]['id_alternatif'];
-																																												echo str_replace('.', '', $row2['jum_nilai']) ?>" value="<?php echo $row2['jum_nilai'] ?>">
-													<label class="btn btn-outline-primary" for="nl<?php echo $row[$i]['id_alternatif'];
-																									echo $row[$j]['id_alternatif'];
-																									echo str_replace('.', '', $row2['jum_nilai']) ?>"><?php echo $row2['label'] ?></label>
+													<input type="radio" class="btn-check" name="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif']; ?>" id="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif'];echo str_replace('.', '', $row2['jum_nilai']) ?>" value="<?php echo $row2 ['jum_nilai'] ?>">
+													<label class="btn btn-data btn-outline-primary" for="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif'];echo str_replace('.', '', $row2['jum_nilai']) ?>"><?php echo $row2['label'] ?></label>
 												<?php
 												}
 												?>

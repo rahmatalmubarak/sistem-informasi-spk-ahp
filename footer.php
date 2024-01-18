@@ -1,4 +1,4 @@
-<footer class="text-center">&copy; 2024 | Penerimaan beasiswa PPA UIN</footer>
+<footer class="text-center">&copy; 2024 | Penerimaan beasiswa PPA UIN Imam Bonjol Padang</footer>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

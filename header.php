@@ -16,7 +16,7 @@ $db = $config->getConnection();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Penerimaan beasiswa PPA UIN</title>
+    <title>Penerimaan beasiswa PPA UIN Imam Bonjol Padang</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -62,11 +62,10 @@ $db = $config->getConnection();
         border-color: #0d6efd;
     }
 
-    .btn {
+    .btn-data {
         font-family: 'Oswald', sans-serif;
         display: inline-block;
         font-weight: 500;
-        /* line-height: 1.5; */
         color: #212529;
         text-align: center;
         text-decoration: none;
@@ -122,7 +121,7 @@ $db = $config->getConnection();
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="index.php">Penerimaan beasiswa PPA UIN</a>
+                <a class="navbar-brand" href="index.php">Penerimaan beasiswa PPA UIN Imam Bonjol Padang</a>
 
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

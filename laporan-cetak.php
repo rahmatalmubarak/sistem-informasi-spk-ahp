@@ -4,7 +4,7 @@ require('includes/fpdf/fpdf.php');
 class PDF extends FPDF{
 	
 	function PDF($orientation='P', $unit='mm', $size='A4'){
-	    $this->FPDF($orientation,$unit,$size);
+	    parent::FPDF($orientation,$unit,$size);
 	}
 	
 	function Header(){
@@ -98,20 +98,22 @@ $pdf->SetFont('Arial','B',9);
 $pdf->Cell(40,10,'Hasil Perangkingan',0,0,'L');
 $pdf->ln();
 
-$pdf->SetFont('Arial','B',9);
+$pdf->SetFont('Arial','B',8);
 $pdf->Cell(30,7,'Kriteria/Alternatif',1,0,'L');
 while ($row2y = $stmt2y->fetch(PDO::FETCH_ASSOC)){
 	if(strlen($row2y['nama_kriteria']) >= 21){
-		$pdf->Cell(42,7,$row2y['nama_kriteria'],1,0,'L');
+		$pdf->Cell(39,7,$row2y['nama_kriteria'],1,0,'L');
 	} else if (strlen($row2y['nama_kriteria']) < 23) {
-		$pdf->Cell(30,7,$row2y['nama_kriteria'],1,0,'L');
+		$pdf->Cell(28,7,$row2y['nama_kriteria'],1,0,'L');
 	}
 }
 $pdf->Cell(15,7,'Hasil',1,0,'L');
+$pdf->Cell(15,7,'Rangking',1,0,'L');
 
 $pdf->ln();
-$pdf->SetFont('Arial','',9);
+$pdf->SetFont('Arial','',8);
 
+$no=1;
 while ($row1 = $stmt1y->fetch(PDO::FETCH_ASSOC)){
 	$pdf->Cell(30,7,$row1['nama_alternatif'],1,0,'L');
 	$a1= $row1['id_alternatif'];
@@ -122,15 +124,16 @@ while ($row1 = $stmt1y->fetch(PDO::FETCH_ASSOC)){
 		while ($rowr = $stmtr->fetch(PDO::FETCH_ASSOC)){
 			$xab = $rowr['skor_alt_kri']*$row21['bobot_kriteria'];
 			if (strlen($row21['nama_kriteria']) >= 21) {
-				$pdf->Cell(42,7,number_format($xab, 5, '.', ','),1,0,'L');
+				$pdf->Cell(39,7,number_format($xab, 5, '.', ','),1,0,'L');
 			}else if(strlen($row21['nama_kriteria']) < 23){
-				$pdf->Cell(30,7,number_format($xab, 5, '.', ','),1,0,'L');
+				$pdf->Cell(28,7,number_format($xab, 5, '.', ','),1,0,'L');
 			}
 		}
 	}
 	$stmthasil = $pro->readHasil2($a1);
 	$hasil = $stmthasil->fetch(PDO::FETCH_ASSOC);
 	$pdf->Cell(15,7,number_format($hasil['hasil_akhir'], 5, '.', ','),1,0,'L');
+	$pdf->Cell(15,7,$no++,1,0,'L');
 	$pdf->ln();
 }
 $pdf->ln();
