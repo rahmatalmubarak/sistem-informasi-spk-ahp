@@ -47,6 +47,14 @@ class Bobot{
 		return $stmt;
 	}
 
+	function read_analisa_kriteria_respon($a, $b)
+	{
+		$query = "select * from " . $this->table_name . " where id_responden = '$a' and kriteria_pertama = '$b' or id_responden = '$a' and kriteria_kedua = '$b'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
+
 	function read2($a,$b,$c){
 		
 		$query = "select * from ".$this->table_name." where kriteria_pertama = '$a' and kriteria_kedua = '$b' and id_responden = '$c'";
@@ -160,9 +168,9 @@ class Bobot{
 		$this->nak = $row['jumkr'];
 	}
 	
-	function readSum2($a,$b){
+	function readSum2($a){
 
-		$query = "SELECT sum(hasil_analisa_kriteria) as jumkr2 FROM ".$this->table_name." where kriteria_kedua = '$a' and id_responden = '$b'";
+		$query = "SELECT sum(nilai_normalisasi) as jumkr2 FROM ahp_normalisasi_kriteria where id_kriteria_kedua = '$a'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -184,7 +192,7 @@ class Bobot{
 	
 	function readAvg($a){
 
-		$query = "SELECT avg(hasil_analisa_kriteria) as avgkr FROM ".$this->table_name." where kriteria_pertama = '$a'";
+		$query = "SELECT avg(nilai_normalisasi) as avgkr FROM ahp_normalisasi_kriteria where id_kriteria_pertama = '$a'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		

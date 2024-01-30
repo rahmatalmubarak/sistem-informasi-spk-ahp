@@ -109,6 +109,15 @@ class Rangking{
 
 		return $stmt;
 	}
+
+	function Hasil(){
+		$query = "SELECT * FROM ahp_jum_alt_kri JOIN ahp_data_alternatif ON ahp_jum_alt_kri.id_alternatif = ahp_data_alternatif.id_alternatif GROUP BY nama_alternatif ORDER BY ahp_jum_alt_kri.hasil_alt_kri DESC;";
+
+		$stmt = $this->conn->prepare( $query );
+		$stmt->execute();
+
+		return $stmt;
+	}
 	
 	function readHasil2($a){
 		

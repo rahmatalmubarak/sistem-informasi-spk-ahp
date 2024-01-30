@@ -33,6 +33,34 @@
 
     }
 
+    function showStickySuccessSimpanToast() {
+        $().toastmessage('showToast', {
+            text: 'Sukses disimpan!',
+            sticky: true,
+            position: 'top-right',
+            type: 'success',
+            closeText: '',
+            close: function() {
+                console.log("toast is closed ...");
+            }
+        });
+
+    }
+
+    function showStickyDataAlready() {
+        $().toastmessage('showToast', {
+            text: 'Id Kriteria sudah ada',
+            sticky: true,
+            position: 'top-right',
+            type: 'notice',
+            closeText: '',
+            close: function() {
+                console.log("toast is closed ...");
+            }
+        });
+
+    }
+
     function showNoticeToast() {
         $().toastmessage('showNoticeToast', "Kami telah menentukan nilai yang boleh diinput");
     }
@@ -121,6 +149,7 @@
         }
     });
     $(document).ready(function() {
+        $("input:radio").removeAttr("checked");
         url = window.location.href;
         url = url.split('/');
         url[4] = 'get-data-kriteria.php?responden=' + $('#kriteria_responden').val();
@@ -130,7 +159,7 @@
         url_hasil = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
         $('#hasil_kriteria').prop("href", url_hasil)
 
-        url[4] = 'analisa-alternatif-tabel.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+        url[4] = 'analisa-alternatif-tabel.php';
         url_hasil = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
         $('#hasil_alternatif').prop("href", url_hasil)
         if (window.location.pathname.includes('analisa-kriteria')) {
@@ -147,6 +176,7 @@
             })
         }
         $('#kriteria_responden').change(function() {
+            $("input:radio").removeAttr("checked");
             url = window.location.href;
             url = url.split('/');
             url[4] = 'get-data-kriteria.php?responden=' + $('#kriteria_responden').val();
@@ -173,9 +203,12 @@
     });
 
     $(document).ready(function() {
+        showHasilKriteriaButton();
+        showHasilAlternatifButton()
+        $("input:radio").removeAttr("checked");
         url = window.location.href;
         url = url.split('/');
-        url[4] = 'get-data-alternatif.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+        url[4] = 'get-data-alternatif.php?responden=' + $('#kriteria_responden').val() + '&kriteria=' + $('#kriteria').val();
         url = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
         if (window.location.pathname.includes('analisa-alternatif')) {
             $.ajax({
@@ -190,13 +223,14 @@
                 }
             })
         }
-        $('#alternatif_responden').change(function() {
+        $('#kriteria_responden').change(function() {
+            $("input:radio").removeAttr("checked");
             url = window.location.href;
             url = url.split('/');
-            url[4] = 'get-data-alternatif.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+            url[4] = 'get-data-alternatif.php?responden=' + $('#kriteria_responden').val() + '&kriteria=' + $('#kriteria').val();
             url_alternatif = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
 
-            url[4] = 'analisa-alternatif-tabel.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+            url[4] = 'analisa-alternatif-tabel.php?responden=' + $('#kriteria_responden').val() + '&kriteria=' + $('#kriteria').val();
             url_hasil = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
             $('#hasil_alternatif').prop("href", url_hasil)
             if (window.location.pathname.includes('analisa-alternatif')) {
@@ -214,12 +248,13 @@
             }
         })
         $('#kriteria').change(function() {
+            $("input:radio").removeAttr("checked");
             url = window.location.href;
             url = url.split('/');
-            url[4] = 'get-data-alternatif.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+            url[4] = 'get-data-alternatif.php?responden=' + $('#kriteria_responden').val() + '&kriteria=' + $('#kriteria').val();
             url_alternatif = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
 
-            url[4] = 'analisa-alternatif-tabel.php?responden=' + $('#alternatif_responden').val() + '&kriteria=' + $('#kriteria').val();
+            url[4] = 'analisa-alternatif-tabel.php?responden=' + $('#kriteria_responden').val() + '&kriteria=' + $('#kriteria').val();
             url_hasil = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4]
             $('#hasil_alternatif').prop("href", url_hasil)
             if (window.location.pathname.includes('analisa-alternatif')) {
@@ -236,8 +271,6 @@
                 })
             }
         });
-        showHasilKriteriaButton();
-        showHasilAlternatifButton();
     })
 
     $('#form_kriteria').on('submit', function(e) {
@@ -251,7 +284,7 @@
             success: function(response) {
                 if (response == 'true') {
                     showHasilKriteriaButton();
-                    showStickySuccessToast();
+                    showStickySuccessSimpanToast();
                     // window.location.reload();
                 } else {
                     showStickyErrorInputToast();
@@ -271,8 +304,8 @@
             success: function(response) {
                 console.log(response);
                 if (response == 'true') {
-                    showHasilKriteriaButton();
-                    showStickySuccessToast();
+                    showHasilAlternatifButton();
+                    showStickySuccessSimpanToast();
                     // window.location.reload();
                 } else {
                     showStickyErrorInputToast();
@@ -289,12 +322,12 @@
                 url = url.split('/');
                 url[4] = 'check-analisa-kriteria.php';
                 url = url[0] + '/' + url[1] + '/' + url[2] + '/' + url[3] + '/' + url[4];
-                console.log(url);
                 $.ajax({
                     url: url,
                     type: 'GET',
                     dataType: 'json', // added data type
                     success: function(response) {
+                        console.log('asd');
                         if (response.status == true) {
                             $('#hasil_kriteria').show();
                         }
@@ -317,7 +350,6 @@
                     type: 'GET',
                     dataType: 'json', // added data type
                     success: function(response) {
-
                         if (response.status == true) {
                             $('#hasil_alternatif').show();
                         }

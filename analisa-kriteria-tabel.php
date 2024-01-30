@@ -3,24 +3,43 @@
 include_once 'header.php';
 include_once 'includes/bobot.inc.php';
 include_once 'includes/kriteria.inc.php';
+include_once 'includes/responden.inc.php';
 $pro = new Bobot($db);
+$res = new Responden($db);
 $responden = $_GET['responden'];
 $stmt2 = $pro->readAll2();
 $stmt3 = $pro->readAll2();
 $jum_kriteria = $pro->countAll();
 
 $run = false;
-if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R2')->rowCount() > 0 || $pro->read_analisa_kriteria_all('R3')->rowCount() > 0) {
-	$run = true;
-	$all_kriteria_R1 = $pro->read_analisa_kriteria_all('R1')->fetchAll();
-	$all_kriteria_R2 = $pro->read_analisa_kriteria_all('R2')->fetchAll();
-	$all_kriteria_R3 = $pro->read_analisa_kriteria_all('R3')->fetchAll();
 
+$responden_all = $res->readAll()->fetchAll();
+foreach ($responden_all as $key => $respon) {
+	if($pro->read_analisa_kriteria_all($respon['id_responden'])->rowCount() > 0){
+		$run = true;
+	}else{
+		$run = false;
+	}
+}
+
+if ($run) {
+	foreach ($responden_all as $key => $respon) {
+		$all_kriteria[$key] = $pro->read_analisa_kriteria_all($respon['id_responden'])->fetchAll();
+	}
 	$all_kriteria_total = [];
-	foreach ($all_kriteria_R1 as $key => $analisa_kriteria) {
-		$all_kriteria_total[$key]['nilai_perbandingan'] = pow($all_kriteria_R1[$key]['nilai_analisa_kriteria'] * $all_kriteria_R2[$key]['nilai_analisa_kriteria'] * $all_kriteria_R3[$key]['nilai_analisa_kriteria'], 0.33);
-		$all_kriteria_total[$key]['kriteria_pertama'] = $all_kriteria_R1[$key]['kriteria_pertama'];
-		$all_kriteria_total[$key]['kriteria_kedua'] = $all_kriteria_R1[$key]['kriteria_kedua'];
+	$all_kriteria_1 = $all_kriteria[0];
+	foreach ($all_kriteria_1 as $key => $analisa_kriteria) {
+		$total = 1;
+		for ($i=0; $i < count($all_kriteria); $i++) {
+			foreach ($all_kriteria[$i] as $key2 => $kriteria_value) {
+				if($kriteria_value['kriteria_pertama'] == $analisa_kriteria['kriteria_pertama'] && $kriteria_value['kriteria_kedua'] == $analisa_kriteria['kriteria_kedua']){
+					$total *= $kriteria_value['nilai_analisa_kriteria'];
+				}
+			}
+		}
+		$all_kriteria_total[$key]['nilai_perbandingan'] =  pow($total, 0.33);
+		$all_kriteria_total[$key]['kriteria_pertama'] = $all_kriteria_1[$key]['kriteria_pertama'];
+		$all_kriteria_total[$key]['kriteria_kedua'] = $all_kriteria_1[$key]['kriteria_kedua'];
 	}
 } else {
 	$run = false;
@@ -50,74 +69,6 @@ if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_
 				</div>
 			</div>
 			<br />
-
-			<table width="100%" class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>Antar Kriteria</th>
-						<?php
-
-						while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-						?>
-							<th><?php echo $row2['nama_kriteria'] ?></th>
-						<?php
-						}
-						?>
-					</tr>
-				</thead>
-
-				<tbody>
-					<?php
-					while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
-					?>
-						<tr>
-							<th style="vertical-align:middle;"><?php echo $row3['nama_kriteria'] ?></th>
-							<?php
-							$stmt4 = $pro->readAll2();
-							while ($row4 = $stmt4->fetch(PDO::FETCH_ASSOC)) {
-							?>
-								<td style="vertical-align:middle;">
-									<?php
-									if ($row3['id_kriteria'] == $row4['id_kriteria']) {
-										echo '1';
-										if ($pro->read($row3['id_kriteria'], $row4['id_kriteria'], $responden)) {
-											$pro->update($row3['id_kriteria'], '1', $row4['id_kriteria'], $responden);
-										} else {
-											$pro->insert($row3['id_kriteria'], '1', $row4['id_kriteria'], $responden);
-										}
-									} else {
-										$pro->readAll1($row3['id_kriteria'], $row4['id_kriteria'], $responden);
-										echo number_format($pro->kp, 3, '.', ',');
-									}
-									?>
-								</td>
-							<?php
-							}
-							?>
-						</tr>
-					<?php
-					}
-					?>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th>Jumlah</th>
-						<?php
-						$stmt5 = $pro->readAll2();
-						while ($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
-						?>
-							<th><?php
-								$pro->readSum1($row5['id_kriteria'], $responden);
-								echo number_format($pro->nak, 3, '.', ',');
-								$pro->insert3($pro->nak, $row5['id_kriteria']);
-								?></th>
-						<?php
-						}
-						?>
-					</tr>
-				</tfoot>
-
-			</table>
 		</form>
 
 		<?php
@@ -267,7 +218,6 @@ if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_
 							<th style="vertical-align:middle;"><?php
 																$pro->readAvg($row3x['id_kriteria']);
 																$bbt = $pro->hak;
-																$pro->insert4($bbt, $row3x['id_kriteria']);
 																echo number_format($bbt, 3, '.', ',');
 																?></th>
 						</tr>
@@ -283,7 +233,7 @@ if ($pro->read_analisa_kriteria_all('R1')->rowCount() > 0 || $pro->read_analisa_
 						while ($row5x = $stmt5x->fetch(PDO::FETCH_ASSOC)) {
 						?>
 							<th><?php
-								$pro->readSum2($row5x['id_kriteria'], $responden);
+								$pro->readSum2($row5x['id_kriteria']);
 								echo number_format($pro->nak, 3, '.', ',');
 								?></th>
 						<?php

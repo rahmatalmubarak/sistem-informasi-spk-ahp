@@ -3,16 +3,14 @@ include_once 'header.php';
 include_once 'includes/alternatif.inc.php';
 $pro1 = new Alternatif($db);
 $stmt1 = $pro1->readAll();
-$stmt1y = $pro1->readAll();
+// $stmt1y = $pro1->readAll();
 include_once 'includes/kriteria.inc.php';
 $pro2 = new Kriteria($db);
 $stmt2 = $pro2->readAll();
 $stmt2y = $pro2->readAll();
 include_once 'includes/rangking.inc.php';
 $pro = new Rangking($db);
-$stmt = $pro->readKhusus();
-$stmty = $pro->readKhusus();
-$count = $pro->countAll();
+$stmt1y = $pro->Hasil();
 $stmtx1 = $pro->readBob();
 $stmtx2 = $pro->readBob();
 $stmtx1y = $pro->readBob();
@@ -180,29 +178,6 @@ $stmtx2y = $pro->readBob();
 				<?php
 				}
 				?>
-				<tr>
-					<th>Jumlah</th>
-					<?php
-					while ($rowx2 = $stmtx2y->fetch(PDO::FETCH_ASSOC)) {
-					?>
-						<td>
-							<?php
-							$stmtx3y = $pro->readMax($rowx2['id_kriteria']);
-							$rowx3 = $stmtx3y->fetch(PDO::FETCH_ASSOC);
-							echo number_format($rowx3['mnr1'], 5, '.', ',');
-							?>
-						</td>
-					<?php
-					}
-					?>
-					<td>
-						<?php
-						$stmtx4y = $pro->readMax2();
-						$rowx4 = $stmtx4y->fetch(PDO::FETCH_ASSOC);
-						echo number_format($rowx4['mnr2'], 5, '.', ',');
-						?>
-					</td>
-				</tr>
 			</tbody>
 
 		</table>

@@ -7,6 +7,8 @@ include_once 'includes/kriteria.inc.php';
 $pro3 = new Kriteria($db);
 include_once 'includes/nilai.inc.php';
 $pro2 = new Nilai($db);
+include_once 'includes/responden.inc.php';
+$res = new Responden($db);
 
 if (isset($_POST['hapus'])) {
 	$pro1->delete();
@@ -108,12 +110,19 @@ window.onload=function(){
 								<p style="padding:10px 0;"><label>Pilih Responden</label></p>
 							</div>
 						</div>
+						<?php
+						$responden = $res->readAll()->fetchAll();
+						?>
 						<div class="col-xs-12 col-md-9">
 							<div class="form-group">
-								<select class="form-control" id="alternatif_responden" name="responden">
-									<option value="R1">Responden 1</option>
-									<option value="R2">Responden 2</option>
-									<option value="R3">Responden 3</option>
+								<select class="form-control" id="kriteria_responden" name="responden">
+									<?php
+									foreach ($responden as $key => $respon) {
+									?>
+										<option value="<?= $respon['id_responden'] ?>"><?= $respon['nama'] ?></option>
+									<?php
+									}
+									?>
 								</select>
 							</div>
 						</div>
@@ -159,8 +168,13 @@ window.onload=function(){
 												$stmt1 = $pro2->readAll();
 												while ($row2 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
 												?>
-													<input type="radio" class="btn-check" name="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif']; ?>" id="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif'];echo str_replace('.', '', $row2['jum_nilai']) ?>" value="<?php echo $row2 ['jum_nilai'] ?>">
-													<label class="btn btn-data btn-outline-primary" for="nl<?php echo $row[$i]['id_alternatif'];echo $row[$j]['id_alternatif'];echo str_replace('.', '', $row2['jum_nilai']) ?>"><?php echo $row2['label'] ?></label>
+													<input type="radio" class="btn-check" name="nl<?php echo $row[$i]['id_alternatif'];
+																									echo $row[$j]['id_alternatif']; ?>" id="nl<?php echo $row[$i]['id_alternatif'];
+																																													echo $row[$j]['id_alternatif'];
+																																													echo str_replace('.', '', $row2['jum_nilai']) ?>" value="<?php echo $row2['jum_nilai'] ?>">
+													<label class="btn btn-data btn-outline-primary" for="nl<?php echo $row[$i]['id_alternatif'];
+																											echo $row[$j]['id_alternatif'];
+																											echo str_replace('.', '', $row2['jum_nilai']) ?>"><?php echo $row2['label'] ?></label>
 												<?php
 												}
 												?>
@@ -192,7 +206,7 @@ window.onload=function(){
 					}
 					?>
 					<div style="display: flex;justify-content: space-between;">
-						<button type="submit" class="btn btn-primary"> Tambah <span class="fa fa-plus"></span></button>
+						<button type="submit" class="btn btn-primary"> Simpan <span class="fa fa-plus"></span></button>
 						<a href="analisa-alternatif-tabel.php" id="hasil_alternatif" class="btn btn-primary"> Hasil <span class="fa fa-arrow-right"></span></a>
 					</div>
 				</form>

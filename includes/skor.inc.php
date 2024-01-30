@@ -124,14 +124,14 @@ class Skor{
 		return $stmt;
 	}
 
-	function readAll1($a, $b, $c, $d){
+	function readAll1($a, $b, $c){
 
-		$query = "SELECT * FROM ".$this->table_name." where alternatif_pertama = '$a' and alternatif_kedua = '$b' and id_kriteria='$c' and id_responden = '$d' LIMIT 0,1";
+		$query = "SELECT * FROM ahp_matriks_perbandingan_alternatif where id_alternatif_pertama = '$a' and id_alternatif_kedua = '$b' and id_kriteria='$c' LIMIT 0,1";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$this->kp = $row['nilai_analisa_alternatif'];
+		$this->kp = $row['nilai_perbandingan'];
 	}
 
 	function readAll2(){
@@ -163,9 +163,20 @@ class Skor{
 		return $stmt->rowCount();
 	}
 
-	function readSum1($a,$b,$c){
+	function readSum1($a,$b){
 
-		$query = "SELECT sum(nilai_analisa_alternatif) as jumkr FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria='$b' and id_responden = '$c'";
+		$query = "SELECT sum(nilai_analisa_alternatif) as jumkr FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria='$b'";
+		$stmt = $this->conn->prepare( $query );
+		$stmt->execute();
+		
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$this->nak = $row['jumkr'];
+	}
+
+	function sum_matriks_perbandingan_alternatif($a,$b){
+
+		$query = "SELECT sum(nilai_perbandingan) as jumkr FROM ahp_matriks_perbandingan_alternatif where id_alternatif_kedua = '$a' and id_kriteria='$b'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -174,9 +185,9 @@ class Skor{
 		$this->nak = $row['jumkr'];
 	}
 	
-	function readSum2($a,$b,$c){
+	function readSum2($a,$b){
 
-		$query = "SELECT sum(hasil_analisa_alternatif) as jumkr2 FROM ".$this->table_name." where alternatif_kedua = '$a' and id_kriteria = '$b' and id_responden= '$c'";
+		$query = "SELECT sum(nilai_normalisasi) as jumkr2 FROM ahp_normalisasi_alternatif where id_alternatif_kedua = '$a' and id_kriteria = '$b'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -196,9 +207,9 @@ class Skor{
 		$this->bb = $row['bbkr'];
 	}
 	
-	function readAvg($a,$c,$d){
+	function readAvg($a,$c){
 
-		$query = "SELECT avg(hasil_analisa_alternatif) as avgkr FROM ".$this->table_name." where alternatif_pertama = '$a' and id_kriteria='$c' and id_responden = '$d'";
+		$query = "SELECT avg(nilai_normalisasi) as avgkr FROM ahp_normalisasi_alternatif where id_alternatif_pertama = '$a' and id_kriteria='$c'";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		
@@ -274,10 +285,20 @@ class Skor{
 		return $stmt;
 	}
 
+	function get_analisa_alternatif_kriteria($b)
+	{
+		$query = "select * from " . $this->table_name . " where id_kriteria = '$b'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
 	function insert_matriks_perbandingan_alternatif($a, $b, $c,$d)
 	{
 
 		$query = "insert into ahp_matriks_perbandingan_alternatif values('','$a','$b','$c','$d')";
+		echo $query;
 		$stmt = $this->conn->prepare($query);
 
 		if ($stmt->execute()) {
@@ -288,8 +309,7 @@ class Skor{
 	}
 
 	function update_matriks_perbandingan_alternatif($a, $b, $c, $d)
-	{
-
+	{ 	
 		$query = "UPDATE  ahp_matriks_perbandingan_alternatif  SET nilai_perbandingan = '$b' WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";
 
 		$stmt = $this->conn->prepare($query);

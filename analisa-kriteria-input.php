@@ -22,20 +22,6 @@ try {
 			$pro->read2($alternatif[2], $alternatif[0], $responden) ? $pro->update($alternatif[2], 1 / $alternatif[1], $alternatif[0], $responden) : $pro->insert($alternatif[2], 1 / $alternatif[1], $alternatif[0], $responden);
 		}
 	
-		while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
-			$stmt4 = $pro->readAll2();
-			while ($row4 = $stmt4->fetch(PDO::FETCH_ASSOC)) {
-				if ($row3['id_kriteria'] == $row4['id_kriteria']) {
-					if ($pro->read($row3['id_kriteria'], $row4['id_kriteria'], $responden)) {
-						$pro->update($row3['id_kriteria'], '1', $row4['id_kriteria'], $responden);
-					} else {
-						$pro->insert($row3['id_kriteria'], '1', $row4['id_kriteria'], $responden);
-					}
-				} else {
-					$pro->readAll1($row3['id_kriteria'], $row4['id_kriteria'], $responden);
-				}
-			}
-		}
 		$stmt5 = $pro->readAll2();
 		while ($row5 = $stmt5->fetch(PDO::FETCH_ASSOC)) {
 			$pro->readSum1($row5['id_kriteria'], $responden);

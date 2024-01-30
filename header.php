@@ -109,7 +109,7 @@ $db = $config->getConnection();
 
 <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
 
@@ -142,7 +142,7 @@ $db = $config->getConnection();
                             <li role="presentation"><a href="analisa-kriteria.php"><span class="fa fa-bomb"></span> Analisa Kriteria</a></li>
                             <li role="presentation"><a href="analisa-alternatif.php"><span class="fa fa-balance-scale"></span> Analisa Alternatif</a></li>
                             <li role="presentation"><a href="rangking.php"><span class="fa fa-bolt"></span> Rangking</a></li>
-                            <li role="presentation"><a href="laporan-cetak.php" target="_blank"><span class="fa fa-file-pdf-o"></span> Laporan</a></li>
+                            <li role="presentation"><a href="cetak.php" target="_blank"><span class="fa fa-file-pdf-o"></span> Laporan</a></li>
                         </ul>
                     </li>
                     <!--                    <li class="dropdown">

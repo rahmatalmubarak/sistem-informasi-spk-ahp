@@ -11,7 +11,7 @@ class Responden{
 	public function __construct($db){
 		$this->conn = $db;
 	}
-	function insert(){
+	public function insert(){
 		
 		$query = "insert into ".$this->table_name." values('',?,?,?)";
 		$stmt = $this->conn->prepare($query);
@@ -27,7 +27,7 @@ class Responden{
 		
 	}
 
-	function readAll(){
+	public function readAll(){
 		
 		$query = "select * from ".$this->table_name."";
 		$stmt = $this->conn->prepare($query);
@@ -35,7 +35,7 @@ class Responden{
 		return $stmt;
 	}
 
-	function readOne()
+	public function readOne()
 	{
 
 		$query = "SELECT * FROM " . $this->table_name . " WHERE id_responden=? LIMIT 0,1";
@@ -50,8 +50,23 @@ class Responden{
 		$this->nama = $row['nama'];
 	}
 
+	public function read_responden()
+	{
+
+		$query = "SELECT * FROM " . $this->table_name . " WHERE id_responden=? LIMIT 0,1";
+
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(1, $this->id);
+		$stmt->execute();
+		if ($stmt->execute() && $stmt->rowCount() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// update the product
-	function update()
+	public function update()
 	{
 
 		$query = "UPDATE 
@@ -79,7 +94,7 @@ class Responden{
 	}
 	
 	// delete the product
-	function delete(){
+	public function delete(){
 	
 		$query = "DELETE FROM " . $this->table_name;
 		
@@ -92,7 +107,7 @@ class Responden{
 		}
 	}
 
-	function countAll()
+	public function countAll()
 	{
 
 		$query = "SELECT * FROM " . $this->table_name . " ORDER BY id_responden ASC";
