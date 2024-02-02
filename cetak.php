@@ -1,7 +1,8 @@
 <?php
 require('includes/dompdf/autoload.inc.php');
-
-$html1 = file_get_contents("http://localhost/sistem-informasi-spk-uin-ahp/laporan-cetak.php");
+$uri = $_SERVER['REQUEST_URI'];
+$uri = explode('/',$uri);
+$html1 = file_get_contents("http://localhost/".$uri[1]."/laporan-cetak.php");
 
 // echo $html1;
 use Dompdf\Dompdf;

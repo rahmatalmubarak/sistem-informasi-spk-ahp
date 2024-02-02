@@ -24,25 +24,7 @@ $stmt5 = $pro5->readAll();
 	<div class="col-xs-12 col-sm-12 col-md-12">
 		<div id="container2" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
 		<br />
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Nilai Preferensi</h3>
-					</div>
-					<div class="panel-body">
-						<ol>
-							<?php
-							while ($row3 = $stmt3->fetch(PDO::FETCH_ASSOC)) {
-							?>
-								<li><?php echo $row3['ket_nilai'] ?> (<?php echo $row3['jum_nilai'] ?>)</li>
-							<?php
-							}
-							?>
-						</ol>
-					</div>
-				</div>
-			</div>
+		<div class="row" style="display: flex; justify-content: center;">
 			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
