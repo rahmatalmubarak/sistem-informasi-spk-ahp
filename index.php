@@ -101,7 +101,7 @@ $stmt5 = $pro5->readAll();
 					//data yang diambil dari database dimasukan ke variable nama dan data
 					//
 					{
-						name: '<?php echo $row4['nama_alternatif'] ?>',
+						name: "<?php echo $row4['nama_alternatif'] ?>",
 						data: [<?php echo $row4['hasil_akhir'] ?>]
 					},
 				<?php } ?>

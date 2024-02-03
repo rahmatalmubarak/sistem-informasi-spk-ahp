@@ -94,22 +94,6 @@ $stmtx2y = $pro->readBob();
 					}
 					?>
 				</tr>
-				<tr>
-					<th>Jumlah</th>
-					<?php
-					while ($rowx2 = $stmtx2->fetch(PDO::FETCH_ASSOC)) {
-					?>
-						<td>
-							<?php
-							$stmtx3 = $pro->readMax($rowx2['id_kriteria']);
-							$rowx3 = $stmtx3->fetch(PDO::FETCH_ASSOC);
-							echo number_format($rowx3['mnr1'], 5, '.', ',');
-							?>
-						</td>
-					<?php
-					}
-					?>
-				</tr>
 			</tbody>
 
 		</table>

@@ -70,11 +70,6 @@ if ($run) {
 			</div>
 			<br />
 		</form>
-
-		<?php
-
-		if ($run) {
-		?>
 			<!-- Matriks perbandingan -->
 			<table width="100%" class="table table-striped table-bordered">
 				<thead>
@@ -308,17 +303,6 @@ if ($run) {
 					</tr>
 				</tbody>
 			</table>
-		<?php
-		} else {
-		?>
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<strong style="font-size:13pt;">Responden Belum Lengkap, <a href="/sistem-informasi-spk-uin-ahp/analisa-kriteria.php">Klik untuk melengkapi</a></strong>
-				</div>
-			</div>
-		<?php
-		}
-		?>
 	</div>
 </div>
 <?php

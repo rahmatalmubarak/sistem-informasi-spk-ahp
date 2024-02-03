@@ -18,5 +18,5 @@ $dompdf->setPaper('A4', 'potrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+$dompdf->stream('LAPORAN HASIL PENERIMAAN BEASISWA PPA FAKULTAS SAINS DAN TEKNOLOGI');
 

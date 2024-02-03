@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL, 'id_ID');
 include_once 'includes/config.php';
 include_once 'includes/alternatif.inc.php';
 $config = new Config();
@@ -17,8 +18,30 @@ $stmtx1 = $pro->readBob();
 $stmtx2 = $pro->readBob();
 $stmtx1y = $pro->readBob();
 $stmtx2y = $pro->readBob();
+$date = new DateTime();
+function tgl_indo($tanggal)
+{
+	$bulan = array(
+		1 =>   'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+	);
+	$pecahkan = explode('-', $tanggal);
+	// variabel pecahkan 0 = tanggal
+	// variabel pecahkan 1 = bulan
+	// variabel pecahkan 2 = tahun
 
-
+	return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+}
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +104,7 @@ $stmtx2y = $pro->readBob();
 	<div class='header-title'>
 		<h3>LAPORAN HASIL PENERIMAAN BEASISWA PPA FAKULTAS SAINS DAN TEKNOLOGI</h3>
 	</div>
-	<h4>Skor dan Bobo Alternatif</h4>
+	<h4>Skor dan Bobot Alternatif</h4>
 	<div class='body-table'>
 		<table class='table' border=1>
 			<thead>
@@ -203,13 +226,21 @@ $stmtx2y = $pro->readBob();
 							$pro->hasil1();
 							?>
 						</td>
-						<td ><?= $no++ ?></td>
+						<td><?= $no++ ?></td>
 					</tr>
 				<?php
 				}
 				?>
 			</tbody>
 		</table>
+	</div>
+
+	<div style="float: right; display: flex; flex-direction: column; align-items: center;margin-top: 20px;">
+		<div style="display: flex;flex-direction: column;">
+			<p style="margin-bottom: 5px;">Padang, <?php echo tgl_indo(date('Y-m-d'))  ?></p>
+			<p style="margin-top: 0px; margin-left: 20%; margin-bottom: 60px;">Diketahui Oleh</p>
+			<p style="margin-left: 10%;">(.............................)</p>
+		</div>
 	</div>
 </body>
 

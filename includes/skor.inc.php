@@ -330,6 +330,15 @@ class Skor{
 		return $stmt;
 	}
 
+	function read_matriks_perbandingan_alternatif_kriteria($a)
+	{
+		$query = "select * from ahp_matriks_perbandingan_alternatif WHERE id_kriteria = '$a'";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
 	function read_matriks_perbandingan_alternatif($a, $c, $d)
 	{
 		$query = "select * from ahp_matriks_perbandingan_alternatif WHERE id_alternatif_pertama = '$a' and id_alternatif_kedua = '$c' and id_kriteria = '$d'";

@@ -96,10 +96,16 @@ class Responden{
 	// delete the product
 	public function delete(){
 	
-		$query = "DELETE FROM " . $this->table_name;
+		$query = "DELETE FROM " . $this->table_name . " WHERE id_responden = ?";
 		
 		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(1, $this->id);
 
+		if($result = $stmt->execute()){
+			return true;
+		}else{
+			return false;
+		}
 		if($result = $stmt->execute()){
 			return true;
 		}else{
@@ -113,7 +119,7 @@ class Responden{
 		$query = "SELECT * FROM " . $this->table_name . " ORDER BY id_responden ASC";
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
-
+		
 		return $stmt->rowCount();
 	}
 
