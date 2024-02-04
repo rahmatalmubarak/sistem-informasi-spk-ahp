@@ -167,7 +167,7 @@ function tgl_indo($tanggal)
 		</table>
 	</div>
 
-	<h4>Hasil Perengkingan</h4>
+	<h4>Hasil Perangkingan</h4>
 	<div class='body-table'>
 		<table class='table' border=1>
 			<thead>

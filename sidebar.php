@@ -15,7 +15,7 @@
 			  </div>
 			  <div class="panel-body">
 			    <ul class="nav nav-pills nav-stacked">
-				  <li role="presentation"><a href="nilai.php"><span class="fa fa-modx"></span> Data Responden</a></li>
+				  <li role="presentation"><a href="data-responden.php"><span class="fa fa-modx"></span> Data Responden</a></li>
 				  <li role="presentation"><a href="data-kriteria.php"><span class="fa fa-bank"></span> Data Kriteria</a></li>
 				  <li role="presentation"><a href="data-alternatif.php"><span class="fa fa-book"></span> Data Alternatif</a></li>
 				</ul>
