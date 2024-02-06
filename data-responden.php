@@ -64,7 +64,7 @@ if (isset($_POST['hapus-contengan'])) {
                 <thead>
                     <tr>
                         <th width="10px"><input type="checkbox" name="select-all" id="select-all" /></th>
-                        <th>ID Responden</th>
+                        <!-- <th>ID Responden</th> -->
                         <th>Nama Responden</th>
                         <th>Jenis Kelamin</th>
                         <th>Jabatan</th>
@@ -75,7 +75,7 @@ if (isset($_POST['hapus-contengan'])) {
                 <tfoot>
                     <tr>
                         <th><input type="checkbox" name="select-all2" id="select-all2" /></th>
-                        <th>ID Responden</th>
+                        <!-- <th>ID Responden</th> -->
                         <th>Nama Responden</th>
                         <th>Jenis Kelamin</th>
                         <th>Jabatan</th>
@@ -90,7 +90,7 @@ if (isset($_POST['hapus-contengan'])) {
                     ?>
                         <tr>
                             <td style="vertical-align:middle;"><input type="checkbox" value="<?php echo $row['id_responden'] ?>" name="checkbox[]" /></td>
-                            <td style="vertical-align:middle;"><?php echo $row['id_responden'] ?></td>
+                            <!-- <td style="vertical-align:middle;"><?php echo $row['id_responden'] ?></td> -->
                             <td style="vertical-align:middle;"><?php echo $row['nama'] ?></td>
                             <td style="vertical-align:middle;"><?php echo $row['jenis_kelamin'] ?></td>
                             <td style="vertical-align:middle;"><?php echo $row['jabatan'] ?></td>
