@@ -90,7 +90,7 @@ class Kriteria{
 			return false;
 		}
 	}
-	
+
 	// delete the product
 	function delete(){
 	

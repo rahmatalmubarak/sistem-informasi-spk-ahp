@@ -214,6 +214,7 @@ if ($run) {
 																$pro->readAvg($row3x['id_kriteria']);
 																$bbt = $pro->hak;
 																echo number_format($bbt, 3, '.', ',');
+																$pro->insert4($bbt, $row3x['id_kriteria']);
 																?></th>
 						</tr>
 					<?php
@@ -234,10 +235,12 @@ if ($run) {
 						<?php
 						}
 						?>
-						<th><?php
+						<th>
+							<?php
 							$pro->readSum3();
 							echo number_format($pro->bb, 3, '.', ',');
-							?></th>
+							?>
+						</th>
 					</tr>
 				</tfoot>
 

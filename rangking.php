@@ -85,7 +85,7 @@ $stmtx2y = $pro->readBob();
 				}
 				?>
 				<tr>
-					<th>Bobot</th>
+					<th>Jumlah</th>
 					<?php
 					while ($rowx1 = $stmtx1->fetch(PDO::FETCH_ASSOC)) {
 					?>
