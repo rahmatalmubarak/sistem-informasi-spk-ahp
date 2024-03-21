@@ -129,7 +129,7 @@ $all_responden = $res->readAll()->fetchAll();
 					<?php
 					}
 					?>
-					<th>Skor</th>
+					<th>Prioritas</th>
 				</tr>
 			</thead>
 

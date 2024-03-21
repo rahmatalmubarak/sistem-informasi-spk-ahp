@@ -163,7 +163,7 @@ if ($run) {
 						<?php
 						}
 						?>
-						<th>Bobot</th>
+						<th>Prioritas</th>
 					</tr>
 				</thead>
 

@@ -26,6 +26,71 @@ $stmt5 = $pro5->readAll();
 		<br />
 		<div class="row" style="display: flex; justify-content: center;">
 			<div class="col-xs-12 col-sm-12 col-md-4">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<th>Kriteria</th>
+						<th>Sub Kriteria</th>
+						<th>Range Nilai</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="3" style="text-align: center; vertical-align: middle">IPK</td>
+							<td><3.50</td>
+							<td>Nilai 2 - 4</td>
+						</tr>
+						<tr>
+							<td>3.50</td>
+							<td>Nilai 4 - 6</td>
+						</tr>
+						<tr>
+							<td>3.50 - 4.00</td>
+							<td>Nilai 6 - 9</td>
+						</tr>
+		
+						<tr>
+							<td rowspan="4" style="text-align: center; vertical-align: middle">Prestasi Akademik</td>
+							<td>Tidak Ada </td>
+							<td>Nilai 2 - 3</td>
+						</tr>
+						<tr>
+							<td>Lokal</td>
+							<td>Nilai 3 - 5</td>
+						</tr>
+						<tr>
+							<td>Nasional</td>
+							<td>Nilai 5 - 7</td>
+						</tr>
+						<tr>
+							<td>Internasional</td>
+							<td>Nilai 7 - 9</td>
+						</tr>
+		
+						<tr>
+							<td rowspan="4" style="text-align: center; vertical-align: middle;">Prestasi Non Akademik</td>
+							<td>Tidak Ada </td>
+							<td>Nilai 2 - 3</td>
+						</tr>
+						<tr>
+							<td>Lokal</td>
+							<td>Nilai 3 - 5</td>
+						</tr>
+						<tr>
+							<td>Nasional</td>
+							<td>Nilai 5 - 7</td>
+						</tr>
+						<tr>
+							<td>Internasional</td>
+							<td>Nilai 7 - 9</td>
+						</tr>
+						<tr>
+							<td rowspan="3" style="text-align: center; vertical-align: middle">Berkelakuan Baik</td>
+							<td rowspan="3"></td>
+							<td rowspan="3"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Kriteria & Bobot</h3>
